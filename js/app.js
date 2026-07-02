@@ -47,6 +47,66 @@
     return srcId.replace(/^CCC /, "").replace(/^Saints — /, "");
   }
 
+  /* ---------- persistent progress (localStorage) ---------- */
+  const STORAGE_KEY = "lectio-intelligo-progress-v1";
+
+  // Stable id per question, derived from its source and text, so saved
+  // progress survives reordering or adding questions to the bank.
+  function questionId(q) {
+    const s = q.src + "|" + q.q;
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  }
+
+  function loadProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  let progress = loadProgress(); // { [questionId]: 1 } once answered correctly
+
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch (e) {
+      /* storage unavailable (e.g. private browsing) — play without saving */
+    }
+  }
+
+  function masteredCount(srcId) {
+    return QUESTION_BANK.filter((q) => q.src === srcId && progress[questionId(q)]).length;
+  }
+
+  function refreshMastery() {
+    document.querySelectorAll(".mastery").forEach((span) => {
+      let total, done;
+      if (span.dataset.group) {
+        const group = SOURCE_GROUPS.find((g) => g.name === span.dataset.group);
+        const items = group ? group.items : [];
+        total = items.reduce((n, item) => n + questionCount(item), 0);
+        done = items.reduce((n, item) => n + masteredCount(item), 0);
+      } else {
+        total = questionCount(span.dataset.src);
+        done = masteredCount(span.dataset.src);
+      }
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      span.textContent = pct + "%";
+      span.classList.toggle("done", total > 0 && done === total);
+    });
+    const total = QUESTION_BANK.length;
+    const done = QUESTION_BANK.filter((q) => progress[questionId(q)]).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const fill = $("#overall-fill");
+    if (fill) fill.style.width = pct + "%";
+    const text = $("#overall-text");
+    if (text) text.textContent =
+      `${done} of ${total} questions answered correctly — ${pct}% complete.`;
+  }
+
   /* ---------- setup screen ---------- */
   function buildSetup() {
     const container = $("#source-groups");
@@ -58,6 +118,10 @@
 
       const legend = document.createElement("legend");
       legend.textContent = group.name;
+      const groupMastery = document.createElement("span");
+      groupMastery.className = "mastery";
+      groupMastery.dataset.group = group.name;
+      legend.appendChild(groupMastery);
       fieldset.appendChild(legend);
 
       const toggleRow = document.createElement("div");
@@ -91,6 +155,10 @@
         count.className = "count";
         count.textContent = `(${n})`;
         label.appendChild(count);
+        const mastery = document.createElement("span");
+        mastery.className = "mastery";
+        mastery.dataset.src = item;
+        label.appendChild(mastery);
         grid.appendChild(label);
       });
 
@@ -201,8 +269,13 @@
 
     const q = quizQuestions[currentIndex];
     const correct = choice === q.answer;
-    if (correct) score++;
-    else missed.push(q);
+    if (correct) {
+      score++;
+      progress[questionId(q)] = 1;
+      saveProgress();
+    } else {
+      missed.push(q);
+    }
 
     document.querySelectorAll(".choice").forEach((b) => {
       b.disabled = true;
@@ -299,6 +372,13 @@
   document.addEventListener("DOMContentLoaded", () => {
     buildSetup();
     updateStartState();
+    refreshMastery();
+    on("#btn-reset-progress", () => {
+      if (!confirm("Reset all saved progress? This cannot be undone.")) return;
+      progress = {};
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+      refreshMastery();
+    });
     document.querySelectorAll("input[name='qtype']").forEach((r) =>
       r.addEventListener("change", updateStartState)
     );
@@ -306,11 +386,15 @@
     on("#btn-clear-all", () => setAllSources(false));
     on("#btn-start", startQuiz);
     on("#btn-next", nextQuestion);
-    on("#btn-quit", () => showScreen("setup"));
+    on("#btn-quit", () => {
+      showScreen("setup");
+      refreshMastery();
+    });
     on("#btn-again", startQuiz);
     on("#btn-new-selection", () => {
       showScreen("setup");
       updateStartState();
+      refreshMastery();
     });
   });
 })();
