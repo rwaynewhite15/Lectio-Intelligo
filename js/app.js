@@ -284,25 +284,31 @@
   });
 
   /* ---------- wire up ---------- */
+  // Null-safe listener attachment: if one element is missing (e.g. a stale
+  // cached page), the rest of the game still gets wired up.
+  function on(selector, handler) {
+    const el = $(selector);
+    if (el) el.addEventListener("click", handler);
+  }
+
+  function setAllSources(checked) {
+    document.querySelectorAll(".source-cb").forEach((cb) => (cb.checked = checked));
+    updateStartState();
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     buildSetup();
     updateStartState();
     document.querySelectorAll("input[name='qtype']").forEach((r) =>
       r.addEventListener("change", updateStartState)
     );
-    $("#btn-select-all").addEventListener("click", () => {
-      document.querySelectorAll(".source-cb").forEach((cb) => (cb.checked = true));
-      updateStartState();
-    });
-    $("#btn-clear-all").addEventListener("click", () => {
-      document.querySelectorAll(".source-cb").forEach((cb) => (cb.checked = false));
-      updateStartState();
-    });
-    $("#btn-start").addEventListener("click", startQuiz);
-    $("#btn-next").addEventListener("click", nextQuestion);
-    $("#btn-quit").addEventListener("click", () => showScreen("setup"));
-    $("#btn-again").addEventListener("click", startQuiz);
-    $("#btn-new-selection").addEventListener("click", () => {
+    on("#btn-select-all", () => setAllSources(true));
+    on("#btn-clear-all", () => setAllSources(false));
+    on("#btn-start", startQuiz);
+    on("#btn-next", nextQuestion);
+    on("#btn-quit", () => showScreen("setup"));
+    on("#btn-again", startQuiz);
+    on("#btn-new-selection", () => {
       showScreen("setup");
       updateStartState();
     });
