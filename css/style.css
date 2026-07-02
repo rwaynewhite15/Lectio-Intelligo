@@ -72,6 +72,16 @@ main {
 .hint { color: #6d5f4b; font-size: 0.95rem; }
 
 /* ---------- setup: source groups ---------- */
+.global-toggle-row {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0.75rem 0 0.25rem;
+}
+.btn-small {
+  font-size: 0.9rem;
+  padding: 0.35rem 1rem;
+}
+
 .source-group {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -84,6 +94,7 @@ main {
   padding: 0 0.5rem;
 }
 .source-group.ccc legend { color: #1f4e79; }
+.source-group.saints legend { color: #3e5f34; }
 
 .group-toggle-row { font-size: 0.85rem; margin-bottom: 0.5rem; }
 .link-btn {
@@ -182,6 +193,7 @@ main {
 }
 .badge-bible { background: var(--burgundy); color: var(--gold-light); }
 .badge-ccc { background: #1f4e79; color: #dceafc; }
+.badge-saints { background: #3e5f34; color: #e3f0da; }
 .badge-type { background: var(--gold-light); color: var(--ink); }
 
 .question-text {
