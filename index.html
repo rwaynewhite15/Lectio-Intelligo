@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lectio Intelligo — Catholic Bible &amp; Catechism Quiz</title>
-  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="stylesheet" href="css/style.css?v=5" />
 </head>
 <body>
   <header class="site-header">
@@ -15,6 +15,15 @@
   <main>
     <!-- ============ SETUP ============ -->
     <section id="screen-setup" class="screen active">
+      <div class="card">
+        <div class="progress-head">
+          <h2>Your progress</h2>
+          <button id="btn-reset-progress" type="button" class="link-btn reset-link">Reset progress</button>
+        </div>
+        <div class="overall-bar"><div id="overall-fill"></div></div>
+        <p id="overall-text" class="hint"></p>
+      </div>
+
       <div class="card">
         <h2>Choose your sources</h2>
         <p class="hint">Pick the books of the Bible, the eras of the saints, and the sections of the Catechism you want to be quizzed on.</p>
@@ -107,7 +116,7 @@
     <p>Scripture quotations adapted from the Revised Standard Version. Catechism citations refer to the <em>Catechism of the Catholic Church</em>.</p>
   </footer>
 
-  <script src="js/data.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/data.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>

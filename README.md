@@ -26,6 +26,11 @@ Catholic Church* across its eight sections, and the **saints through the ages**.
 - **Instant feedback** with the Scripture or Catechism citation for every answer.
 - **Results & review** — final score with a "for further study" list of any
   questions you missed.
+- **Progress tracking** — every question you answer correctly is remembered in
+  your browser's localStorage. The setup screen shows your overall percentage
+  complete across the whole question bank, plus a percentage badge on each
+  book, saint era, and Catechism section (green when fully mastered). A
+  discreet **Reset progress** button clears the saved history.
 - **Keyboard play** — press 1–4 to answer, Enter to advance.
 
 ## Running the game
