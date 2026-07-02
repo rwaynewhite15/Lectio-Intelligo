@@ -186,11 +186,19 @@
     return $("input[name='qtype']:checked").value; // both | conceptual | fill
   }
 
+  function unansweredOnly() {
+    const cb = $("#unanswered-only");
+    return !!(cb && cb.checked);
+  }
+
   function availablePool() {
     const sources = new Set(selectedSources());
     const type = selectedType();
+    const newOnly = unansweredOnly();
     return QUESTION_BANK.filter(
-      (q) => sources.has(q.src) && (type === "both" || q.type === type)
+      (q) => sources.has(q.src) &&
+             (type === "both" || q.type === type) &&
+             (!newOnly || !progress[questionId(q)])
     );
   }
 
@@ -201,8 +209,12 @@
     btn.disabled = pool.length === 0;
     if (selectedSources().length === 0) {
       note.textContent = "Select at least one book or Catechism section.";
+    } else if (pool.length === 0 && unansweredOnly()) {
+      note.textContent = "You have already answered every matching question correctly — Deo gratias! Uncheck the filter or reset your progress to repeat them.";
     } else if (pool.length === 0) {
       note.textContent = "No questions of that type in your selection — try a different question style.";
+    } else if (unansweredOnly()) {
+      note.textContent = `${pool.length} unanswered question${pool.length === 1 ? "" : "s"} available from your selection.`;
     } else {
       note.textContent = `${pool.length} question${pool.length === 1 ? "" : "s"} available from your selection.`;
     }
@@ -378,10 +390,13 @@
       progress = {};
       try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
       refreshMastery();
+      updateStartState();
     });
     document.querySelectorAll("input[name='qtype']").forEach((r) =>
       r.addEventListener("change", updateStartState)
     );
+    const newOnlyCb = $("#unanswered-only");
+    if (newOnlyCb) newOnlyCb.addEventListener("change", updateStartState);
     on("#btn-select-all", () => setAllSources(true));
     on("#btn-clear-all", () => setAllSources(false));
     on("#btn-start", startQuiz);
@@ -389,6 +404,7 @@
     on("#btn-quit", () => {
       showScreen("setup");
       refreshMastery();
+      updateStartState();
     });
     on("#btn-again", startQuiz);
     on("#btn-new-selection", () => {
