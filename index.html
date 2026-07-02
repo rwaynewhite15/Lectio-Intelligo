@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lectio Intelligo — A Bible, Saints, &amp; Catechism Quiz</title>
-  <link rel="stylesheet" href="css/style.css?v=6" />
+  <link rel="stylesheet" href="css/style.css?v=7" />
 </head>
 <body>
   <header class="site-header">
@@ -42,6 +42,10 @@
             <label><input type="radio" name="qtype" value="both" checked /> Both</label>
             <label><input type="radio" name="qtype" value="conceptual" /> Conceptual</label>
             <label><input type="radio" name="qtype" value="fill" /> Fill in the blank</label>
+          </div>
+          <div class="option">
+            <span class="option-label">Progress filter</span>
+            <label><input type="checkbox" id="unanswered-only" /> Only questions I haven't answered correctly yet</label>
           </div>
           <div class="option">
             <label class="option-label" for="num-questions">Number of questions</label>
@@ -116,7 +120,7 @@
     <p>Scripture quotations adapted from the Revised Standard Version. Catechism citations refer to the <em>Catechism of the Catholic Church</em>.</p>
   </footer>
 
-  <script src="js/data.js?v=6"></script>
-  <script src="js/app.js?v=6"></script>
+  <script src="js/data.js?v=7"></script>
+  <script src="js/app.js?v=7"></script>
 </body>
 </html>

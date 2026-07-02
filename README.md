@@ -22,7 +22,9 @@ Catholic Church* across its eight sections, and the **saints through the ages**.
   - **Conceptual** — questions about people, events, and doctrine.
   - **Fill in the blank** — complete a quoted verse or Catechism passage.
 - **Quiz options** — pick 5, 10, 15, 20, 30, 50, or all available questions,
-  and filter by question style.
+  and filter by question style. A progress filter can limit the quiz to only
+  questions you haven't answered correctly yet, so you can work through the
+  bank without repeats.
 - **Instant feedback** with the Scripture or Catechism citation for every answer.
 - **Results & review** — final score with a "for further study" list of any
   questions you missed.
