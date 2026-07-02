@@ -1,6 +1,6 @@
 # Lectio-Intelligo
 
-**Read. Understand. Believe.** — A Catholic Bible & Catechism quiz game.
+**Read. Understand. Believe.** — A Bible, Saints, & Catechism Quiz.
 
 Lectio-Intelligo (*"I read, I understand"*) is a browser-based quiz game covering
 **all 73 books of the Catholic Bible** (46 Old Testament, including the
