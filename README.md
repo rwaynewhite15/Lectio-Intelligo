@@ -3,20 +3,23 @@
 **Read. Understand. Believe.** — A Catholic Bible & Catechism quiz game.
 
 Lectio-Intelligo (*"I read, I understand"*) is a browser-based quiz game covering
-the books of the Catholic Bible (including the deuterocanonical books) and the
-four parts of the *Catechism of the Catholic Church*.
+**all 73 books of the Catholic Bible** (46 Old Testament, including the
+deuterocanonical books, and 27 New Testament) and the whole *Catechism of the
+Catholic Church* across its eight sections.
 
 ## Features
 
-- **Choose your sources** — select any combination of Bible books (grouped by
-  Pentateuch, Historical Books, Wisdom Books, Prophets, Gospels & Acts, and
-  Epistles & Revelation) and the four parts of the Catechism (the Creed, the
-  Sacraments, Life in Christ, and Christian Prayer).
+- **Choose your sources** — select any combination of the 73 Bible books
+  (grouped by Pentateuch, Historical Books, Wisdom Books, Prophets, Gospels &
+  Acts, Letters of St. Paul, and Catholic Letters & Revelation) and the eight
+  sections of the Catechism (two per part: Revelation, Scripture & Faith; the
+  Creed; the Sacred Liturgy; the Seven Sacraments; Life in the Spirit; the Ten
+  Commandments; Prayer in the Christian Life; and the Lord's Prayer).
 - **Two question styles**, both multiple choice:
   - **Conceptual** — questions about people, events, and doctrine.
   - **Fill in the blank** — complete a quoted verse or Catechism passage.
-- **Quiz options** — pick 5, 10, 15, 20, or all available questions, and filter
-  by question style.
+- **Quiz options** — pick 5, 10, 15, 20, 30, 50, or all available questions,
+  and filter by question style.
 - **Instant feedback** with the Scripture or Catechism citation for every answer.
 - **Results & review** — final score with a "for further study" list of any
   questions you missed.
@@ -32,6 +35,20 @@ Open `index.html` in any modern browser, or serve the folder locally:
 python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
+
+## Hosting on GitHub Pages
+
+Because the game is a static site with `index.html` at the repository root, it
+can be published with GitHub Pages in a couple of clicks:
+
+1. Merge this branch into `main` (or push the files to `main`).
+2. On GitHub, open **Settings → Pages** for the repository.
+3. Under **Build and deployment**, set **Source** to "Deploy from a branch",
+   choose the `main` branch and the `/ (root)` folder, and click **Save**.
+4. After a minute or two, the game will be live at
+   `https://<your-username>.github.io/Lectio-Intelligo/`.
+
+Every later push to `main` republishes the site automatically.
 
 ## Project structure
 
