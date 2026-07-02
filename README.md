@@ -4,17 +4,20 @@
 
 Lectio-Intelligo (*"I read, I understand"*) is a browser-based quiz game covering
 **all 73 books of the Catholic Bible** (46 Old Testament, including the
-deuterocanonical books, and 27 New Testament) and the whole *Catechism of the
-Catholic Church* across its eight sections.
+deuterocanonical books, and 27 New Testament), the whole *Catechism of the
+Catholic Church* across its eight sections, and the **saints through the ages**.
 
 ## Features
 
 - **Choose your sources** — select any combination of the 73 Bible books
   (grouped by Pentateuch, Historical Books, Wisdom Books, Prophets, Gospels &
-  Acts, Letters of St. Paul, and Catholic Letters & Revelation) and the eight
+  Acts, Letters of St. Paul, and Catholic Letters & Revelation), the eight
   sections of the Catechism (two per part: Revelation, Scripture & Faith; the
   Creed; the Sacred Liturgy; the Seven Sacraments; Life in the Spirit; the Ten
-  Commandments; Prayer in the Christian Life; and the Lord's Prayer).
+  Commandments; Prayer in the Christian Life; and the Lord's Prayer), and five
+  eras of the saints (the Apostolic Age, the Early Church, the Middle Ages,
+  the Age of Reform, and the Modern Era). A **Select all sections** button
+  turns on everything at once.
 - **Two question styles**, both multiple choice:
   - **Conceptual** — questions about people, events, and doctrine.
   - **Fill in the blank** — complete a quoted verse or Catechism passage.
@@ -64,7 +67,7 @@ js/app.js       – game logic
 Add entries to `QUESTION_BANK` in `js/data.js`:
 
 ```js
-{ src: "Genesis",            // a Bible book or CCC part listed in SOURCE_GROUPS
+{ src: "Genesis",            // a Bible book, saint era, or CCC section listed in SOURCE_GROUPS
   type: "conceptual",        // "conceptual" or "fill"
   q: "Question text (use ____ for the blank)",
   choices: ["correct answer", "wrong", "wrong", "wrong"], // first is correct

@@ -40,6 +40,13 @@
     return QUESTION_BANK.filter((q) => q.src === srcId).length;
   }
 
+  const SRC_KIND = {};
+  SOURCE_GROUPS.forEach((g) => g.items.forEach((item) => (SRC_KIND[item] = g.kind)));
+
+  function displayName(srcId) {
+    return srcId.replace(/^CCC /, "").replace(/^Saints — /, "");
+  }
+
   /* ---------- setup screen ---------- */
   function buildSetup() {
     const container = $("#source-groups");
@@ -79,8 +86,7 @@
         cb.value = item;
         cb.className = "source-cb";
         cb.addEventListener("change", updateStartState);
-        const displayName = item.replace(/^CCC /, "");
-        label.append(cb, ` ${displayName} `);
+        label.append(cb, ` ${displayName(item)} `);
         const count = document.createElement("span");
         count.className = "count";
         count.textContent = `(${n})`;
@@ -162,8 +168,8 @@
     $("#progress-fill").style.width = pct + "%";
 
     const srcBadge = $("#badge-source");
-    srcBadge.textContent = q.src.replace(/^CCC /, "");
-    srcBadge.className = "badge " + (q.src.startsWith("CCC") ? "badge-ccc" : "badge-bible");
+    srcBadge.textContent = displayName(q.src);
+    srcBadge.className = "badge badge-" + (SRC_KIND[q.src] || "bible");
 
     const typeBadge = $("#badge-type");
     typeBadge.textContent = q.type === "fill" ? "Fill in the blank" : "Conceptual";
@@ -284,6 +290,14 @@
     document.querySelectorAll("input[name='qtype']").forEach((r) =>
       r.addEventListener("change", updateStartState)
     );
+    $("#btn-select-all").addEventListener("click", () => {
+      document.querySelectorAll(".source-cb").forEach((cb) => (cb.checked = true));
+      updateStartState();
+    });
+    $("#btn-clear-all").addEventListener("click", () => {
+      document.querySelectorAll(".source-cb").forEach((cb) => (cb.checked = false));
+      updateStartState();
+    });
     $("#btn-start").addEventListener("click", startQuiz);
     $("#btn-next").addEventListener("click", nextQuestion);
     $("#btn-quit").addEventListener("click", () => showScreen("setup"));
