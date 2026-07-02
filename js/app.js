@@ -83,9 +83,16 @@
 
   function refreshMastery() {
     document.querySelectorAll(".mastery").forEach((span) => {
-      const src = span.dataset.src;
-      const total = questionCount(src);
-      const done = masteredCount(src);
+      let total, done;
+      if (span.dataset.group) {
+        const group = SOURCE_GROUPS.find((g) => g.name === span.dataset.group);
+        const items = group ? group.items : [];
+        total = items.reduce((n, item) => n + questionCount(item), 0);
+        done = items.reduce((n, item) => n + masteredCount(item), 0);
+      } else {
+        total = questionCount(span.dataset.src);
+        done = masteredCount(span.dataset.src);
+      }
       const pct = total ? Math.round((done / total) * 100) : 0;
       span.textContent = pct + "%";
       span.classList.toggle("done", total > 0 && done === total);
@@ -111,6 +118,10 @@
 
       const legend = document.createElement("legend");
       legend.textContent = group.name;
+      const groupMastery = document.createElement("span");
+      groupMastery.className = "mastery";
+      groupMastery.dataset.group = group.name;
+      legend.appendChild(groupMastery);
       fieldset.appendChild(legend);
 
       const toggleRow = document.createElement("div");

@@ -29,7 +29,8 @@ Catholic Church* across its eight sections, and the **saints through the ages**.
 - **Progress tracking** — every question you answer correctly is remembered in
   your browser's localStorage. The setup screen shows your overall percentage
   complete across the whole question bank, plus a percentage badge on each
-  book, saint era, and Catechism section (green when fully mastered). A
+  book, saint era, and Catechism section — and on every group header (the
+  Pentateuch, the Prophets, and so on), all green when fully mastered. A
   discreet **Reset progress** button clears the saved history.
 - **Keyboard play** — press 1–4 to answer, Enter to advance.
 

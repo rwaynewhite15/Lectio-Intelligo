@@ -112,6 +112,7 @@ main {
   background: var(--good);
   border-color: var(--good);
 }
+.source-group legend .mastery { font-weight: normal; }
 
 /* ---------- setup: source groups ---------- */
 .global-toggle-row {
